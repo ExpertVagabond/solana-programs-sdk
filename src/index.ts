@@ -29,10 +29,10 @@ export const PROGRAM_IDS = {
   subscription: new PublicKey("2nj3qrjoiPsxA6sn965UtJeLT5gD8mAFSqFZCsmJQUr2"),
   orderbook: new PublicKey("41q8aXfcpqREjcFRK276KzBRRXWvmfYGqCDHZQ4CPwnX"),
   nftMint: new PublicKey("FxgTrgwz1fZNi5ypcoEFw9YJKYSMj7EdZemfHJuNU2zL"),
-  treasuryVault: new PublicKey("D8ypRqJ45ZLAKmMPTLDuwJZubKgKbHZEXHrQ5T6ArVmE"),
+  treasuryVault: new PublicKey("Ews62Jxt9GSpFhMSuvweRBSQkyZhnMdCokDp9DpUcchx"),
   multisig: new PublicKey("EVmjpeJPCUGBLRCHZMBusPEqHUDQdAJa4oZHh3LURhy5"),
   nftGated: new PublicKey("F17Fg2ZHx1UZqNCBeueuuiDiVJwBLP8NqrLCPJPFQ4Pg"),
-  airdrop: new PublicKey("CNcG4AK4uUXsqAjKQiFk5i9zU75MdHmgdJDXa5cCgYDH"),
+  airdrop: new PublicKey("FZPFToJZbiDnr74xotCMRJtCTHkpuUeaUvrgfZ7HfmMe"),
 } as const;
 
 // IDL exports
