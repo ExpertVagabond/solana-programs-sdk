@@ -31,7 +31,7 @@ export const PROGRAM_IDS = {
   nftMint: new PublicKey("HoNCn3uuMYzQ83i4zjHWhUqEBY9DNEqJfu9vKJF8NQWU"),
   treasuryVault: new PublicKey("D8ypRqJ45ZLAKmMPTLDuwJZubKgKbHZEXHrQ5T6ArVmE"),
   multisig: new PublicKey("3AZTsn99QJnAVJ7gJE5QWgbWgj5jJ8D6wEBn89fKJvJH"),
-  nftGated: new PublicKey("9GJ7Y4hLsNMAt9KtuSGn95UbCnPXRhBVCXed9Y7GHUpJ"),
+  nftGated: new PublicKey("F17Fg2ZHx1UZqNCBeueuuiDiVJwBLP8NqrLCPJPFQ4Pg"),
   airdrop: new PublicKey("CNcG4AK4uUXsqAjKQiFk5i9zU75MdHmgdJDXa5cCgYDH"),
 } as const;
 
