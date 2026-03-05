@@ -16,6 +16,7 @@ import treasuryVaultIdl from "./idl/solana_treasury_vault.json";
 import multisigIdl from "./idl/solana_multisig.json";
 import nftGatedIdl from "./idl/solana_nft_gated.json";
 import airdropIdl from "./idl/solana_airdrop.json";
+import flashLoanIdl from "./idl/solana_flash_loan.json";
 
 // Program IDs
 export const PROGRAM_IDS = {
@@ -33,6 +34,7 @@ export const PROGRAM_IDS = {
   multisig: new PublicKey("EVmjpeJPCUGBLRCHZMBusPEqHUDQdAJa4oZHh3LURhy5"),
   nftGated: new PublicKey("F17Fg2ZHx1UZqNCBeueuuiDiVJwBLP8NqrLCPJPFQ4Pg"),
   airdrop: new PublicKey("FZPFToJZbiDnr74xotCMRJtCTHkpuUeaUvrgfZ7HfmMe"),
+  flashLoan: new PublicKey("2chVPk6DV21qWuyUA2eHAzATdFSHM7ykv1fVX7Gv6nor"),
 } as const;
 
 // IDL exports
@@ -51,6 +53,7 @@ export const IDL = {
   multisig: multisigIdl as Idl,
   nftGated: nftGatedIdl as Idl,
   airdrop: airdropIdl as Idl,
+  flashLoan: flashLoanIdl as Idl,
 } as const;
 
 // Program factory
@@ -202,5 +205,33 @@ export function findAirdropClaimPda(airdrop: PublicKey, claimer: PublicKey): [Pu
   return PublicKey.findProgramAddressSync(
     [Buffer.from("claim"), airdrop.toBuffer(), claimer.toBuffer()],
     PROGRAM_IDS.airdrop
+  );
+}
+
+export function findLendingPoolPda(tokenMint: PublicKey): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("lending_pool"), tokenMint.toBuffer()],
+    PROGRAM_IDS.flashLoan
+  );
+}
+
+export function findPoolVaultPda(pool: PublicKey): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("pool_vault"), pool.toBuffer()],
+    PROGRAM_IDS.flashLoan
+  );
+}
+
+export function findDepositReceiptPda(pool: PublicKey, depositor: PublicKey): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("deposit_receipt"), pool.toBuffer(), depositor.toBuffer()],
+    PROGRAM_IDS.flashLoan
+  );
+}
+
+export function findFlashLoanReceiptPda(pool: PublicKey, borrower: PublicKey): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("flash_loan_receipt"), pool.toBuffer(), borrower.toBuffer()],
+    PROGRAM_IDS.flashLoan
   );
 }
