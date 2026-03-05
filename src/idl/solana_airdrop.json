@@ -1,0 +1,508 @@
+{
+  "address": "CNcG4AK4uUXsqAjKQiFk5i9zU75MdHmgdJDXa5cCgYDH",
+  "metadata": {
+    "name": "solana_airdrop",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "claim",
+      "discriminator": [
+        62,
+        198,
+        214,
+        193,
+        213,
+        159,
+        108,
+        210
+      ],
+      "accounts": [
+        {
+          "name": "claimer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "airdrop",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "airdrop.authority",
+                "account": "Airdrop"
+              },
+              {
+                "kind": "account",
+                "path": "airdrop.mint",
+                "account": "Airdrop"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "airdrop"
+              }
+            ]
+          }
+        },
+        {
+          "name": "claim_record",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  108,
+                  97,
+                  105,
+                  109
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "airdrop"
+              },
+              {
+                "kind": "account",
+                "path": "claimer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "claimer_token_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "proof",
+          "type": {
+            "vec": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "close_airdrop",
+      "discriminator": [
+        85,
+        138,
+        99,
+        129,
+        104,
+        203,
+        94,
+        4
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "airdrop"
+          ]
+        },
+        {
+          "name": "airdrop",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "airdrop"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_airdrop",
+      "discriminator": [
+        227,
+        135,
+        208,
+        66,
+        137,
+        177,
+        80,
+        94
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "airdrop",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "airdrop"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount_per_claim",
+          "type": "u64"
+        },
+        {
+          "name": "max_claims",
+          "type": "u64"
+        },
+        {
+          "name": "merkle_root",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "fund_airdrop",
+      "discriminator": [
+        63,
+        24,
+        238,
+        60,
+        169,
+        178,
+        131,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "airdrop"
+          ]
+        },
+        {
+          "name": "airdrop",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "airdrop.authority",
+                "account": "Airdrop"
+              },
+              {
+                "kind": "account",
+                "path": "airdrop.mint",
+                "account": "Airdrop"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "airdrop"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Airdrop",
+      "discriminator": [
+        31,
+        112,
+        159,
+        158,
+        124,
+        237,
+        9,
+        241
+      ]
+    },
+    {
+      "name": "ClaimRecord",
+      "discriminator": [
+        57,
+        229,
+        0,
+        9,
+        65,
+        62,
+        96,
+        7
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NotActive",
+      "msg": "Airdrop not active"
+    },
+    {
+      "code": 6001,
+      "name": "MaxClaimsReached",
+      "msg": "Max claims reached"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidProof",
+      "msg": "Invalid merkle proof"
+    },
+    {
+      "code": 6003,
+      "name": "Overflow",
+      "msg": "Overflow"
+    }
+  ],
+  "types": [
+    {
+      "name": "Airdrop",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount_per_claim",
+            "type": "u64"
+          },
+          {
+            "name": "max_claims",
+            "type": "u64"
+          },
+          {
+            "name": "total_claimed",
+            "type": "u64"
+          },
+          {
+            "name": "merkle_root",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimRecord",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "airdrop",
+            "type": "pubkey"
+          },
+          {
+            "name": "claimer",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "claimed_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

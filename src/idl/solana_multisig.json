@@ -1,0 +1,384 @@
+{
+  "address": "3AZTsn99QJnAVJ7gJE5QWgbWgj5jJ8D6wEBn89fKJvJH",
+  "metadata": {
+    "name": "solana_multisig",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "approve",
+      "discriminator": [
+        69,
+        74,
+        217,
+        36,
+        115,
+        117,
+        97,
+        76
+      ],
+      "accounts": [
+        {
+          "name": "approver",
+          "signer": true
+        },
+        {
+          "name": "multisig",
+          "relations": [
+            "transaction"
+          ]
+        },
+        {
+          "name": "transaction",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_multisig",
+      "discriminator": [
+        148,
+        146,
+        240,
+        10,
+        226,
+        215,
+        167,
+        174
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "owners",
+          "type": {
+            "vec": "pubkey"
+          }
+        },
+        {
+          "name": "threshold",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "execute",
+      "discriminator": [
+        130,
+        221,
+        242,
+        154,
+        13,
+        193,
+        189,
+        29
+      ],
+      "accounts": [
+        {
+          "name": "executor",
+          "signer": true
+        },
+        {
+          "name": "multisig",
+          "relations": [
+            "transaction"
+          ]
+        },
+        {
+          "name": "transaction",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "to_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "propose_transfer",
+      "discriminator": [
+        140,
+        86,
+        133,
+        124,
+        253,
+        226,
+        251,
+        195
+      ],
+      "accounts": [
+        {
+          "name": "proposer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "multisig.owners [0]",
+                "account": "Multisig"
+              }
+            ]
+          }
+        },
+        {
+          "name": "transaction",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  120
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "multisig"
+              },
+              {
+                "kind": "account",
+                "path": "multisig.tx_count",
+                "account": "Multisig"
+              }
+            ]
+          }
+        },
+        {
+          "name": "to_account"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "memo",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Multisig",
+      "discriminator": [
+        224,
+        116,
+        121,
+        186,
+        68,
+        161,
+        79,
+        236
+      ]
+    },
+    {
+      "name": "MultisigTransaction",
+      "discriminator": [
+        37,
+        242,
+        192,
+        200,
+        155,
+        205,
+        171,
+        82
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidOwners",
+      "msg": "Invalid number of owners (2-10)"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidThreshold",
+      "msg": "Invalid threshold"
+    },
+    {
+      "code": 6002,
+      "name": "NotAnOwner",
+      "msg": "Not an owner"
+    },
+    {
+      "code": 6003,
+      "name": "AlreadyApproved",
+      "msg": "Already approved"
+    },
+    {
+      "code": 6004,
+      "name": "AlreadyExecuted",
+      "msg": "Already executed"
+    },
+    {
+      "code": 6005,
+      "name": "ThresholdNotMet",
+      "msg": "Threshold not met"
+    },
+    {
+      "code": 6006,
+      "name": "Overflow",
+      "msg": "Overflow"
+    }
+  ],
+  "types": [
+    {
+      "name": "Multisig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owners",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "threshold",
+            "type": "u8"
+          },
+          {
+            "name": "tx_count",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MultisigTransaction",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "multisig",
+            "type": "pubkey"
+          },
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "proposer",
+            "type": "pubkey"
+          },
+          {
+            "name": "to",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "memo",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "approvals",
+            "type": {
+              "vec": "bool"
+            }
+          },
+          {
+            "name": "executed",
+            "type": "bool"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

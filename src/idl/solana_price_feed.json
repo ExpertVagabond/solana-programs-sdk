@@ -1,0 +1,282 @@
+{
+  "address": "6uafjLqqMeP4DgYqDuVPCL9BVabC7ruQC6SnDdUvXqC5",
+  "metadata": {
+    "name": "solana_price_feed",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "initialize_feed",
+      "discriminator": [
+        167,
+        251,
+        140,
+        58,
+        66,
+        138,
+        187,
+        95
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "decimals",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "read_price",
+      "discriminator": [
+        118,
+        121,
+        51,
+        85,
+        223,
+        117,
+        209,
+        124
+      ],
+      "accounts": [
+        {
+          "name": "feed"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "transfer_authority",
+      "discriminator": [
+        48,
+        169,
+        76,
+        72,
+        229,
+        180,
+        55,
+        161
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "feed"
+          ]
+        },
+        {
+          "name": "feed",
+          "writable": true
+        },
+        {
+          "name": "new_authority"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_price",
+      "discriminator": [
+        61,
+        34,
+        117,
+        155,
+        75,
+        34,
+        123,
+        208
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "feed"
+          ]
+        },
+        {
+          "name": "feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "feed.authority",
+                "account": "PriceFeed"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "price",
+          "type": "i64"
+        },
+        {
+          "name": "confidence",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PriceFeed",
+      "discriminator": [
+        189,
+        103,
+        252,
+        23,
+        152,
+        35,
+        243,
+        156
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "PriceUpdateEvent",
+      "discriminator": [
+        176,
+        152,
+        211,
+        252,
+        92,
+        105,
+        194,
+        103
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NameTooLong",
+      "msg": "Name too long (max 32)"
+    },
+    {
+      "code": 6001,
+      "name": "StalePrice",
+      "msg": "Price is stale (>120s)"
+    },
+    {
+      "code": 6002,
+      "name": "Overflow",
+      "msg": "Overflow"
+    }
+  ],
+  "types": [
+    {
+      "name": "PriceFeed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "decimals",
+            "type": "u8"
+          },
+          {
+            "name": "price",
+            "type": "i64"
+          },
+          {
+            "name": "confidence",
+            "type": "u64"
+          },
+          {
+            "name": "last_updated",
+            "type": "i64"
+          },
+          {
+            "name": "num_updates",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PriceUpdateEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feed",
+            "type": "pubkey"
+          },
+          {
+            "name": "price",
+            "type": "i64"
+          },
+          {
+            "name": "confidence",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ]
+}

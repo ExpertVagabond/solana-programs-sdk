@@ -1,0 +1,325 @@
+{
+  "address": "9GJ7Y4hLsNMAt9KtuSGn95UbCnPXRhBVCXed9Y7GHUpJ",
+  "metadata": {
+    "name": "solana_nft_gated",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "access",
+      "discriminator": [
+        164,
+        126,
+        173,
+        212,
+        193,
+        28,
+        29,
+        93
+      ],
+      "accounts": [
+        {
+          "name": "holder",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "gate",
+          "writable": true
+        },
+        {
+          "name": "holder_token_account"
+        },
+        {
+          "name": "access_record",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  99,
+                  99,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "gate"
+              },
+              {
+                "kind": "account",
+                "path": "holder"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_gate",
+      "discriminator": [
+        32,
+        40,
+        167,
+        136,
+        81,
+        13,
+        199,
+        238
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "required_mint"
+        },
+        {
+          "name": "gate",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "account",
+                "path": "required_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "re_access",
+      "discriminator": [
+        150,
+        109,
+        68,
+        221,
+        82,
+        212,
+        40,
+        153
+      ],
+      "accounts": [
+        {
+          "name": "holder",
+          "signer": true
+        },
+        {
+          "name": "gate",
+          "writable": true,
+          "relations": [
+            "access_record"
+          ]
+        },
+        {
+          "name": "holder_token_account"
+        },
+        {
+          "name": "access_record",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  99,
+                  99,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "gate"
+              },
+              {
+                "kind": "account",
+                "path": "holder"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "revoke_access",
+      "discriminator": [
+        106,
+        128,
+        38,
+        169,
+        103,
+        238,
+        102,
+        147
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "gate"
+          ]
+        },
+        {
+          "name": "gate",
+          "relations": [
+            "access_record"
+          ]
+        },
+        {
+          "name": "access_record",
+          "writable": true
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AccessRecord",
+      "discriminator": [
+        224,
+        96,
+        239,
+        97,
+        225,
+        133,
+        153,
+        188
+      ]
+    },
+    {
+      "name": "Gate",
+      "discriminator": [
+        13,
+        25,
+        212,
+        153,
+        150,
+        57,
+        225,
+        171
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NameTooLong",
+      "msg": "Name too long (max 32)"
+    },
+    {
+      "code": 6001,
+      "name": "NoNftHeld",
+      "msg": "No NFT held for this gate"
+    },
+    {
+      "code": 6002,
+      "name": "Overflow",
+      "msg": "Overflow"
+    }
+  ],
+  "types": [
+    {
+      "name": "AccessRecord",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "gate",
+            "type": "pubkey"
+          },
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint_used",
+            "type": "pubkey"
+          },
+          {
+            "name": "first_access",
+            "type": "i64"
+          },
+          {
+            "name": "access_count",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Gate",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "required_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "total_accesses",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
