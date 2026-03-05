@@ -1,0 +1,361 @@
+{
+  "address": "2bmGLNZ1dXFiWcS7x8DffzQVHUuPhhJ4vRKLw2SSdBNB",
+  "metadata": {
+    "name": "concert_ticket",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "On-chain concert ticketing with SPL token payments"
+  },
+  "instructions": [
+    {
+      "name": "create_tickets",
+      "discriminator": [
+        55,
+        227,
+        147,
+        238,
+        5,
+        57,
+        129,
+        143
+      ],
+      "accounts": [
+        {
+          "name": "venue_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "venue_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "venue_account"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "_venue_id",
+          "type": "string"
+        },
+        {
+          "name": "ticket_name",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "available_tickets",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "create_venue",
+      "discriminator": [
+        162,
+        203,
+        21,
+        140,
+        131,
+        95,
+        73,
+        87
+      ],
+      "accounts": [
+        {
+          "name": "venue_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "venue_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "token_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_venue_id",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "purchase_tickets",
+      "discriminator": [
+        146,
+        121,
+        85,
+        207,
+        182,
+        70,
+        169,
+        155
+      ],
+      "accounts": [
+        {
+          "name": "venue_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "venue_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyer_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  105,
+                  99,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "venue_id"
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "buyer_token_account",
+          "writable": true
+        },
+        {
+          "name": "venue_owner_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_venue_id",
+          "type": "string"
+        },
+        {
+          "name": "ticket_name",
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PurchasedTickets",
+      "discriminator": [
+        47,
+        212,
+        76,
+        104,
+        121,
+        172,
+        66,
+        9
+      ]
+    },
+    {
+      "name": "Venue",
+      "discriminator": [
+        8,
+        155,
+        85,
+        226,
+        234,
+        173,
+        42,
+        242
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidTicketName",
+      "msg": "Invalid ticket name"
+    },
+    {
+      "code": 6001,
+      "name": "TicketsNotAvailable",
+      "msg": "Tickets not available"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidSub",
+      "msg": "Arithmetic error"
+    }
+  ],
+  "types": [
+    {
+      "name": "PurchasedTickets",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "ticket_name",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "quantity",
+            "type": "u64"
+          },
+          {
+            "name": "date_of_purchase",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ticket",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "available",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Venue",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "available_tickets",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Ticket"
+                }
+              }
+            }
+          },
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner_token_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
