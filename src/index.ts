@@ -17,6 +17,7 @@ import multisigIdl from "./idl/solana_multisig.json";
 import nftGatedIdl from "./idl/solana_nft_gated.json";
 import airdropIdl from "./idl/solana_airdrop.json";
 import flashLoanIdl from "./idl/solana_flash_loan.json";
+import ticketingIdl from "./idl/concert_ticket.json";
 
 // Program IDs
 export const PROGRAM_IDS = {
@@ -35,6 +36,7 @@ export const PROGRAM_IDS = {
   nftGated: new PublicKey("F17Fg2ZHx1UZqNCBeueuuiDiVJwBLP8NqrLCPJPFQ4Pg"),
   airdrop: new PublicKey("FZPFToJZbiDnr74xotCMRJtCTHkpuUeaUvrgfZ7HfmMe"),
   flashLoan: new PublicKey("2chVPk6DV21qWuyUA2eHAzATdFSHM7ykv1fVX7Gv6nor"),
+  ticketing: new PublicKey("2bmGLNZ1dXFiWcS7x8DffzQVHUuPhhJ4vRKLw2SSdBNB"),
 } as const;
 
 // IDL exports
@@ -54,6 +56,7 @@ export const IDL = {
   nftGated: nftGatedIdl as Idl,
   airdrop: airdropIdl as Idl,
   flashLoan: flashLoanIdl as Idl,
+  ticketing: ticketingIdl as Idl,
 } as const;
 
 // Program factory
@@ -233,5 +236,19 @@ export function findFlashLoanReceiptPda(pool: PublicKey, borrower: PublicKey): [
   return PublicKey.findProgramAddressSync(
     [Buffer.from("flash_loan_receipt"), pool.toBuffer(), borrower.toBuffer()],
     PROGRAM_IDS.flashLoan
+  );
+}
+
+export function findVenuePda(venueId: string): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("venue"), Buffer.from(venueId)],
+    PROGRAM_IDS.ticketing
+  );
+}
+
+export function findTicketPda(venueId: string, buyer: PublicKey): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("ticket"), Buffer.from(venueId), buyer.toBuffer()],
+    PROGRAM_IDS.ticketing
   );
 }
