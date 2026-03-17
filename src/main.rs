@@ -29,46 +29,118 @@ enum Cmd {
 
 #[derive(clap::Subcommand)]
 enum PdaCmd {
-    Escrow { maker: String, seed: u64 },
-    Vesting { authority: String, mint: String },
-    StakeEntry { pool: String, owner: String },
-    Subscription { plan: String, subscriber: String },
-    Proposal { dao: String, proposal_id: u64 },
-    Reputation { config: String, wallet: String },
-    ClaimRecord { faucet: String, claimer: String },
-    Order { market: String, order_id: u64 },
-    Market { authority: String, base_mint: String, quote_mint: String },
-    Collection { authority: String },
-    NftMetadata { collection: String, mint: String },
-    PriceFeed { authority: String },
-    Treasury { authority: String, mint: String },
-    Multisig { creator: String },
-    MultisigTx { multisig: String, tx_index: u64 },
-    Gate { authority: String, required_mint: String },
-    Access { gate: String, holder: String },
-    Airdrop { authority: String, mint: String },
-    AirdropClaim { airdrop: String, claimer: String },
+    Escrow {
+        maker: String,
+        seed: u64,
+    },
+    Vesting {
+        authority: String,
+        mint: String,
+    },
+    StakeEntry {
+        pool: String,
+        owner: String,
+    },
+    Subscription {
+        plan: String,
+        subscriber: String,
+    },
+    Proposal {
+        dao: String,
+        proposal_id: u64,
+    },
+    Reputation {
+        config: String,
+        wallet: String,
+    },
+    ClaimRecord {
+        faucet: String,
+        claimer: String,
+    },
+    Order {
+        market: String,
+        order_id: u64,
+    },
+    Market {
+        authority: String,
+        base_mint: String,
+        quote_mint: String,
+    },
+    Collection {
+        authority: String,
+    },
+    NftMetadata {
+        collection: String,
+        mint: String,
+    },
+    PriceFeed {
+        authority: String,
+    },
+    Treasury {
+        authority: String,
+        mint: String,
+    },
+    Multisig {
+        creator: String,
+    },
+    MultisigTx {
+        multisig: String,
+        tx_index: u64,
+    },
+    Gate {
+        authority: String,
+        required_mint: String,
+    },
+    Access {
+        gate: String,
+        holder: String,
+    },
+    Airdrop {
+        authority: String,
+        mint: String,
+    },
+    AirdropClaim {
+        airdrop: String,
+        claimer: String,
+    },
 }
 
 const PROGRAMS: &[(&str, &str)] = &[
-    ("escrow",         "FKz12mj5HcA9wJRTmpEN2mstdat7KVrwJyy1QULaVi4J"),
-    ("reputation",     "ChWH3iGNS4cwrpH1jz1BRVZqVteS177yr6Pe4Y8MFBQ"),
-    ("tokenFaucet",    "GsHPNhJtQ23Nj2duABZNDAdn1ri2kjxkeTXqH6SUSN1v"),
-    ("stakingPool",    "E3xDfoQKgqdCNgnK1B77xgRjKYjEsBCXvPxZDGoxercH"),
-    ("daoVoting",      "6wGk7DpNBYDgwW4JZoRjdLB6iNni2AzhyuhiFsgES9ax"),
-    ("priceFeed",      "6uafjLqqMeP4DgYqDuVPCL9BVabC7ruQC6SnDdUvXqC5"),
-    ("tokenVesting",   "9e9VNYBpSGHbF2xbhGJyZDp33WGUQ6S1kpjDxoQXijbp"),
-    ("subscription",   "AqkVLdxNgW5Hw7BEzzTiKME3rnWLLspWhMqKcWsgiqGR"),
-    ("orderbook",      "41q8aXfcpqREjcFRK276KzBRRXWvmfYGqCDHZQ4CPwnX"),
-    ("nftMint",        "HoNCn3uuMYzQ83i4zjHWhUqEBY9DNEqJfu9vKJF8NQWU"),
-    ("treasuryVault",  "D8ypRqJ45ZLAKmMPTLDuwJZubKgKbHZEXHrQ5T6ArVmE"),
-    ("multisig",       "3AZTsn99QJnAVJ7gJE5QWgbWgj5jJ8D6wEBn89fKJvJH"),
-    ("nftGated",       "F17Fg2ZHx1UZqNCBeueuuiDiVJwBLP8NqrLCPJPFQ4Pg"),
-    ("airdrop",        "CNcG4AK4uUXsqAjKQiFk5i9zU75MdHmgdJDXa5cCgYDH"),
+    ("escrow", "FKz12mj5HcA9wJRTmpEN2mstdat7KVrwJyy1QULaVi4J"),
+    ("reputation", "ChWH3iGNS4cwrpH1jz1BRVZqVteS177yr6Pe4Y8MFBQ"),
+    (
+        "tokenFaucet",
+        "GsHPNhJtQ23Nj2duABZNDAdn1ri2kjxkeTXqH6SUSN1v",
+    ),
+    (
+        "stakingPool",
+        "E3xDfoQKgqdCNgnK1B77xgRjKYjEsBCXvPxZDGoxercH",
+    ),
+    ("daoVoting", "6wGk7DpNBYDgwW4JZoRjdLB6iNni2AzhyuhiFsgES9ax"),
+    ("priceFeed", "6uafjLqqMeP4DgYqDuVPCL9BVabC7ruQC6SnDdUvXqC5"),
+    (
+        "tokenVesting",
+        "9e9VNYBpSGHbF2xbhGJyZDp33WGUQ6S1kpjDxoQXijbp",
+    ),
+    (
+        "subscription",
+        "AqkVLdxNgW5Hw7BEzzTiKME3rnWLLspWhMqKcWsgiqGR",
+    ),
+    ("orderbook", "41q8aXfcpqREjcFRK276KzBRRXWvmfYGqCDHZQ4CPwnX"),
+    ("nftMint", "HoNCn3uuMYzQ83i4zjHWhUqEBY9DNEqJfu9vKJF8NQWU"),
+    (
+        "treasuryVault",
+        "D8ypRqJ45ZLAKmMPTLDuwJZubKgKbHZEXHrQ5T6ArVmE",
+    ),
+    ("multisig", "3AZTsn99QJnAVJ7gJE5QWgbWgj5jJ8D6wEBn89fKJvJH"),
+    ("nftGated", "F17Fg2ZHx1UZqNCBeueuuiDiVJwBLP8NqrLCPJPFQ4Pg"),
+    ("airdrop", "CNcG4AK4uUXsqAjKQiFk5i9zU75MdHmgdJDXa5cCgYDH"),
 ];
 
 fn decode_pubkey(s: &str) -> Result<[u8; 32], String> {
-    let bytes = bs58::decode(s).into_vec().map_err(|e| format!("invalid base58: {e}"))?;
+    let bytes = bs58::decode(s)
+        .into_vec()
+        .map_err(|e| format!("invalid base58: {e}"))?;
     if bytes.len() != 32 {
         return Err(format!("expected 32 bytes, got {}", bytes.len()));
     }
@@ -121,8 +193,8 @@ fn is_on_curve(bytes: &[u8; 32]) -> bool {
 
     // d = -121665/121666 mod p
     let d = ed25519_d(&p);
-    let num = mod_sub(&y2, &[1], &p);                    // y^2 - 1
-    let den = mod_add(&mod_mul(&d, &y2, &p), &[1], &p);  // d*y^2 + 1
+    let num = mod_sub(&y2, &[1], &p); // y^2 - 1
+    let den = mod_add(&mod_mul(&d, &y2, &p), &[1], &p); // d*y^2 + 1
     let den_inv = mod_inv(&den, &p);
     let x2 = mod_mul(&num, &den_inv, &p);
 
@@ -153,7 +225,9 @@ fn from_le_bytes(bytes: &[u8], _p: &BigNum) -> BigNum {
     for i in 0..4 {
         let start = i * 8;
         let end = (start + 8).min(bytes.len());
-        if start >= bytes.len() { break; }
+        if start >= bytes.len() {
+            break;
+        }
         let mut buf = [0u8; 8];
         let slice = &bytes[start..end];
         buf[..slice.len()].copy_from_slice(slice);
@@ -218,7 +292,9 @@ fn mod_mul(a: &[u64], b: &[u64], p: &BigNum) -> BigNum {
 
 fn mod_reduce(a: &[u64], p: &BigNum) -> BigNum {
     let mut r: Vec<u64> = a[..4.min(a.len())].to_vec();
-    while r.len() < 4 { r.push(0); }
+    while r.len() < 4 {
+        r.push(0);
+    }
     while cmp_big(&r, p) >= 0 {
         r = sub_big(&r, p);
     }
@@ -233,7 +309,9 @@ fn mod_reduce_wide(a: &[u64], p: &BigNum) -> BigNum {
     loop {
         // Find highest non-zero limb
         let mut top = r.len();
-        while top > 4 && r[top - 1] == 0 { top -= 1; }
+        while top > 4 && r[top - 1] == 0 {
+            top -= 1;
+        }
         if top <= 4 {
             let mut short = r[..4].to_vec();
             while cmp_big(&short, p) >= 0 {
@@ -245,7 +323,9 @@ fn mod_reduce_wide(a: &[u64], p: &BigNum) -> BigNum {
         let shift = top - 4;
         let mut shifted_p = vec![0u64; shift];
         shifted_p.extend_from_slice(p);
-        while shifted_p.len() < r.len() { shifted_p.push(0); }
+        while shifted_p.len() < r.len() {
+            shifted_p.push(0);
+        }
         // Estimate quotient
         let q = r[top - 1] / (p[3] + 1);
         let q = if q == 0 { 1 } else { q };
@@ -268,8 +348,12 @@ fn cmp_big(a: &[u64], b: &[u64]) -> i32 {
     for i in (0..4).rev() {
         let av = if i < a.len() { a[i] } else { 0 };
         let bv = if i < b.len() { b[i] } else { 0 };
-        if av > bv { return 1; }
-        if av < bv { return -1; }
+        if av > bv {
+            return 1;
+        }
+        if av < bv {
+            return -1;
+        }
     }
     0
 }
@@ -279,8 +363,12 @@ fn cmp_big_wide(a: &[u64], b: &[u64]) -> i32 {
     for i in (0..len).rev() {
         let av = if i < a.len() { a[i] } else { 0 };
         let bv = if i < b.len() { b[i] } else { 0 };
-        if av > bv { return 1; }
-        if av < bv { return -1; }
+        if av > bv {
+            return 1;
+        }
+        if av < bv {
+            return -1;
+        }
     }
     0
 }
@@ -308,7 +396,9 @@ fn mod_pow(base: &[u64], exp: &[u64], p: &BigNum) -> BigNum {
     let mut result: BigNum = vec![0; 4];
     result[0] = 1;
     let mut b = base.to_vec();
-    while b.len() < 4 { b.push(0); }
+    while b.len() < 4 {
+        b.push(0);
+    }
 
     // Get all bits of exp
     let mut bits = Vec::new();
@@ -335,7 +425,7 @@ fn mod_inv(a: &[u64], p: &BigNum) -> BigNum {
 }
 
 fn div2(a: &[u64]) -> BigNum {
-    let mut r = vec![0u64; 4];
+    let mut r = [0u64; 4];
     for i in (0..4).rev() {
         let v = if i < a.len() { a[i] } else { 0 };
         r[i] = v >> 1;
@@ -363,7 +453,8 @@ fn ed25519_d(p: &BigNum) -> BigNum {
 }
 
 fn program_id_for(name: &str) -> Option<[u8; 32]> {
-    PROGRAMS.iter()
+    PROGRAMS
+        .iter()
         .find(|(n, _)| n.eq_ignore_ascii_case(name))
         .and_then(|(_, addr)| decode_pubkey(addr).ok())
 }
@@ -372,17 +463,23 @@ fn main() {
     let args = Args::parse();
     match args.cmd {
         Cmd::Programs => {
-            let progs: Vec<serde_json::Value> = PROGRAMS.iter()
+            let progs: Vec<serde_json::Value> = PROGRAMS
+                .iter()
                 .map(|(name, addr)| serde_json::json!({"name": name, "address": addr}))
                 .collect();
             println!("{}", serde_json::to_string_pretty(&progs).unwrap());
         }
         Cmd::Derive { program, seeds } => {
             let pid = decode_pubkey(&program).expect("invalid program ID");
-            let seed_bytes: Vec<Vec<u8>> = seeds.iter().map(|s| {
-                // Try base58 decode, fall back to UTF-8
-                bs58::decode(s).into_vec().unwrap_or_else(|_| s.as_bytes().to_vec())
-            }).collect();
+            let seed_bytes: Vec<Vec<u8>> = seeds
+                .iter()
+                .map(|s| {
+                    // Try base58 decode, fall back to UTF-8
+                    bs58::decode(s)
+                        .into_vec()
+                        .unwrap_or_else(|_| s.as_bytes().to_vec())
+                })
+                .collect();
             let seed_refs: Vec<&[u8]> = seed_bytes.iter().map(|s| s.as_slice()).collect();
             let (pda, bump) = find_program_address(&seed_refs, &pid);
             println!("{}", serde_json::json!({"pda": pda, "bump": bump}));
@@ -437,7 +534,11 @@ fn main() {
                     let id = order_id.to_le_bytes();
                     find_program_address(&[b"order", &m, &id], &pid)
                 }
-                PdaCmd::Market { authority, base_mint, quote_mint } => {
+                PdaCmd::Market {
+                    authority,
+                    base_mint,
+                    quote_mint,
+                } => {
                     let pid = program_id_for("orderbook").unwrap();
                     let a = decode_pubkey(&authority).unwrap();
                     let b = decode_pubkey(&base_mint).unwrap();
@@ -477,7 +578,10 @@ fn main() {
                     let id = tx_index.to_le_bytes();
                     find_program_address(&[b"tx", &m, &id], &pid)
                 }
-                PdaCmd::Gate { authority, required_mint } => {
+                PdaCmd::Gate {
+                    authority,
+                    required_mint,
+                } => {
                     let pid = program_id_for("nftGated").unwrap();
                     let a = decode_pubkey(&authority).unwrap();
                     let m = decode_pubkey(&required_mint).unwrap();
