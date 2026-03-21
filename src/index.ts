@@ -1,3 +1,30 @@
+// ── Security: Input Validation & Error Sanitization ──
+const SEC = Object.freeze({
+  MAX_PUBKEY_LENGTH: 44,
+  MAX_SEED_VALUE: BigInt("18446744073709551615"), // u64 max
+  PUBKEY_PATTERN: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/,
+  SECRET_PATTERNS: /(key|token|secret|password|credential)=\S+/gi,
+});
+
+function sanitizeError(err: unknown): string {
+  const msg = err instanceof Error ? (err.message || '').slice(0, 300) : 'An unexpected error occurred';
+  return msg.replace(/\/[^\s:]+/g, '[path]').replace(SEC.SECRET_PATTERNS, '$1=[REDACTED]');
+}
+
+function validatePublicKey(key: string): string {
+  if (typeof key !== 'string' || !SEC.PUBKEY_PATTERN.test(key)) {
+    throw new Error('Invalid public key format');
+  }
+  return key;
+}
+
+function validateSeed(seed: bigint): bigint {
+  if (seed < BigInt(0) || seed > SEC.MAX_SEED_VALUE) {
+    throw new Error('Seed value out of u64 range');
+  }
+  return seed;
+}
+
 import { Program, AnchorProvider, Idl } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 
