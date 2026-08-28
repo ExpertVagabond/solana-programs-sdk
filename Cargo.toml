@@ -4,7 +4,7 @@ version = "1.0.0"
 edition = "2024"
 description = "Solana program IDs and PDA derivation helpers for 14 on-chain programs"
 license = "MIT"
-authors = ["Purple Squirrel Media LLC"]
+authors = ["Matthew Karsten <matthewkarstenconnects@gmail.com>"]
 
 [[bin]]
 name = "pda"

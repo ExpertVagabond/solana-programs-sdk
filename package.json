@@ -1,5 +1,6 @@
 {
   "name": "@expertvagabond/solana-programs-sdk",
+  "author": "Matthew Karsten <matthewkarstenconnects@gmail.com>",
   "version": "0.1.0",
   "description": "TypeScript SDK for 14 Solana Anchor programs",
   "main": "dist/index.js",
